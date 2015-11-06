@@ -1,0 +1,12 @@
+# Modules #
+######################
+node_modules/
+bower_components/
+.idea/
+.git/
+.editorconfig
+.jscsrc
+.jshintrc
+npm-debug.log
+*.djvu
+.gitignore

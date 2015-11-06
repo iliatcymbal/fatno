@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="<%= @applicationName %>">
+<head>
+    <title><%= @title %></title>
+    <link rel="stylesheet" href="styles/all.css"/>
+    <%- @libs %>
+    <%- @mainJS %>
+</head>
+<body>
+<div class="wrapper">
+    <div class="main-holder">
+        <header class="header">
+            <h1>Калькулятор продуктов</h1>
+        </header>
+        <section class="content">
+            <% include 'products' %>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-holder">
+            <p>Калькулятор &copy;</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

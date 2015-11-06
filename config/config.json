@@ -1,0 +1,21 @@
+{
+    "port": 3030,
+    "devMode": true,
+    "products": "./files/prods.json",
+    "rules": "./files/foodRules.json",
+    "applicationName": "fatno.app",
+    "plugins": [
+        "jquery",
+        "angular"
+    ],
+    "testLibs": ["angular-mocks"],
+    "mainScript": "production/built.js",
+    "paths": {
+        "scripts": "scripts",
+        "scriptsAbs": "public/scripts",
+        "scriptsDev": "/dev",
+        "libraries": "scripts/libs",
+        "testsHelpers": "tests/helpers",
+        "specs": "tests/specs"
+    }
+}

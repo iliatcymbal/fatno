@@ -1,0 +1,97 @@
+html,
+body {
+    height: 100%;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    background: #ccc;
+    min-width: 300px;
+    font: 12px/14px Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.header {
+    padding: 10px 0;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.wrapper {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.main-holder {
+    display: table-row;
+    background: #aaa;
+}
+
+.main-holder > *,
+.footer-holder {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer {
+    display: table-row;
+    height: 50px;
+    background: #bbb;
+}
+
+.footer-holder {
+}
+
+.products {
+    overflow: auto;
+}
+
+.table-holder {
+
+    overflow: auto;
+}
+
+.products .list {
+    display: block;
+}
+
+.table-values {
+    border-collapse: collapse;
+}
+
+.table-values .weight {
+    width: 50px;
+}
+
+.table-values th {
+    font-size: 11px;
+}
+
+.table-values th,
+.table-values td {
+    border: 1px solid #ccc;
+    padding: 2px 3px;
+}
+
+.table-values tr:nth-child(even) td {
+    background: #989898;
+}
+
+.table-values .total td {
+    font-weight: bold;
+}
+
+.results {
+    list-style: none;
+}
+
+.results li {
+    margin: 0 0 5px;
+}

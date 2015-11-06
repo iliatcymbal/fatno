@@ -1,0 +1,33 @@
+<div class="products" ng-controller="mainCntr">
+    <select class="list"
+            ng-model="selected"
+            ng-options="product.name for product in products"
+            ng-change="processOption(selected)">
+        <option value="">Выбери продукт</option>
+    </select>
+
+    <div class="table-holder">
+        <table class="table-values">
+            <tr>
+                <th>Продукты</th>
+                <th ng-repeat="title in titles">{{title}}</th>
+            </tr>
+            <tr ng-repeat="val in results track by $index">
+                <td>{{val.name}}</td>
+                <!--td><input type="text" class="weight" value="100"/></td-->
+                <td ng-repeat="td in val.values track by $index">{{td}}</td>
+            </tr>
+            <tr ng-if="totals.length !== 0" class="total">
+                <td>ВСЕГО</td>
+                <td ng-repeat="sum in totals track by $index">{{sum}}</td>
+            </tr>
+        </table>
+    </div>
+    <a href="" ng-if="totals.length !== 0" ng-click="getResults()">Посчитать</a>
+
+    <div class="results-holder" ng-if="totalResult.length">
+        <ul clas="results">
+            <li ng-repeat="result in totalResult">{{result}}</li>
+        </ul>
+    </div>
+</div>
