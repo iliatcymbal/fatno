@@ -5,6 +5,11 @@
             ng-change="processOption(selected)">
         <option value="">Выбери продукт</option>
     </select>
+    <div search-list
+         collection="products"
+         selected="selected"
+         on-change="processOption(selected)">
+    </div>
 
     <div class="table-holder">
         <table class="table-values">
@@ -15,10 +20,11 @@
             <tr ng-repeat="val in results track by $index">
                 <td>{{val.name}}</td>
                 <td ng-repeat="td in val.values track by $index">
-                    <spin-edit ng-if="$index === 0"
+                    <span spin-edit ng-if="$index === 0"
                                spin-model="val"
                                spin-value="td"
-                               weight-changed="weightChanged(val, td)"></spin-edit>
+                               weight-changed="weightChanged(val, td)">
+                    </span>
                     <span ng-if="$index !== 0">{{td.actual}}</span>
                 </td>
             </tr>

@@ -1,20 +1,25 @@
-/*! FATNO - v1.0.1 - 2015-11-09 */angular.module('fatno.app', ['monospaced.mousewheel'])
-  .value('shownIngridients', [
-    'Белки',
-    'Жиры',
-    'Углеводы',
-    'Калорийность',
-    'Железо',
-    'Йод',
-    'ретинол',
-    'бета-',
-    'токоферол',
-    'аскорбиновая',
-    'В1',
-    'В2',
-    'Вс',
-    'РР'
-  ]);
+/*! FATNO - v1.0.1 - 2015-11-14 */(function () {
+  'use strict';
+
+  angular.module('fatno.app', ['monospaced.mousewheel'])
+    .value('shownIngridients', [
+      'Белки',
+      'Жиры',
+      'Углеводы',
+      'Калорийность',
+      'Железо',
+      'Йод',
+      'ретинол',
+      'бета-',
+      'токоферол',
+      'аскорбиновая',
+      'В1',
+      'В2',
+      'Вс',
+      'РР'
+    ]);
+
+}());
 
 angular.module('fatno.app')
   .controller('mainCntr', ['$scope', '$http', 'shownIngridients', mainCntr]);
@@ -138,22 +143,39 @@ function mainCntr($scope, $http, shownIngridients) {
 }
 
 angular.module('fatno.app')
-  .directive('spinEdit', function () {
+  .directive('searchList', [function () {
     'use strict';
 
     return {
-      restrict: 'E',
+      restrict: 'A',
+      templateUrl: 'scripts/dev/templates/searchList.html',
+      scope: {
+        collection: '=',
+        selected: '=',
+        onChange: '&weightChanged'
+      },
+      link: function (scope) {
+      }
+    };
+  }]);
+
+angular.module('fatno.app')
+  .directive('spinEdit', ['$interval', function ($interval) {
+    'use strict';
+
+    return {
+      restrict: 'A',
       templateUrl: 'scripts/dev/templates/spinEdit.html',
       scope: {
         td: '=spinValue',
         val: '=spinModel',
         weightChanged: '&weightChanged'
       },
-      link: function (scope, element) {
-        var input = element.find('input');
+      link: function (scope) {
+        var intervalID;
 
         scope.keyup = function(e) {
-          var code = e.which,
+          var code = e.which || e,
             changeMap = {
               40: function () {
                 if (scope.td.actual) {
@@ -165,18 +187,33 @@ angular.module('fatno.app')
               }
             };
 
-          if (code === 40 || code === 38) {
-            input.val(changeMap[code]());
+          if (code === 40 || code === 38 && (scope.td.actual > 0 || scope.td.actual === 0 && code === 38)) {
+            changeMap[code]();
             scope.weightChanged(scope.td.actual, scope.td);
           }
         };
 
         scope.wheelHandler = function ($event, $delta, $deltaX, $deltaY) {
-          var value = input.val();
-          scope.td.actual += $deltaY;
+          var code = $deltaY > -1 ? 38 : 40;
 
-          scope.weightChanged(scope.td.actual, scope.td);
+          scope.keyup(code);
+        };
+
+        scope.start = function (isIncrease) {
+          var code = isIncrease ? 38 : 40;
+
+          $interval.cancel(intervalID);
+          scope.keyup(code);
+          intervalID = $interval(function () {
+            scope.keyup(code);
+          }, 100);
+
+        };
+
+        scope.stop = function () {
+          $interval.cancel(intervalID);
+          intervalID = undefined;
         };
       }
     };
-  });
+  }]);

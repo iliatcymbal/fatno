@@ -11,6 +11,12 @@ body {
     font: 12px/14px Arial, sans-serif;
 }
 
+.clear-list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
 a {
     color: #00B7FF;
 }
@@ -47,10 +53,6 @@ a {
 }
 
 .footer-holder {
-}
-
-.products {
-    overflow: auto;
 }
 
 .table-holder {

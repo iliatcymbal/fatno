@@ -3,16 +3,15 @@ angular.module('fatno.app')
     'use strict';
 
     return {
-      restrict: 'E',
+      restrict: 'A',
       templateUrl: 'scripts/dev/templates/spinEdit.html',
       scope: {
         td: '=spinValue',
         val: '=spinModel',
         weightChanged: '&weightChanged'
       },
-      link: function (scope, element) {
-        var input = element.find('input'),
-          intervalID;
+      link: function (scope) {
+        var intervalID;
 
         scope.keyup = function(e) {
           var code = e.which || e,

@@ -1,0 +1,23 @@
+.search-holder{
+    position: relative;
+    display: inline-block;
+}
+.search-holder--field{
+    width: 200px;
+}
+.search-holder--list{
+    overflow: auto;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 100%;
+    background: #fff;
+}
+.search-holder--list li{
+    padding: 5px 3px;
+    cursor: default;
+    outline: none;
+}
+.search-holder--list li.active{
+    background: #B0D6FF;
+}
