@@ -6,7 +6,9 @@
     "applicationName": "fatno.app",
     "plugins": [
         "jquery",
-        "angular"
+        "angular",
+        "hamster",
+        "mousewheel"
     ],
     "testLibs": ["angular-mocks"],
     "mainScript": "production/built.js",

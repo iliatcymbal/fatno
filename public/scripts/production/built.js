@@ -1,4 +1,4 @@
-/*! FATNO - v1.0.1 - 2015-05-20 */angular.module('fatno.app', [])
+/*! FATNO - v1.0.1 - 2015-11-09 */angular.module('fatno.app', ['monospaced.mousewheel'])
   .value('shownIngridients', [
     'Белки',
     'Жиры',
@@ -20,14 +20,14 @@ angular.module('fatno.app')
   .controller('mainCntr', ['$scope', '$http', 'shownIngridients', mainCntr]);
 
 function mainCntr($scope, $http, shownIngridients) {
-  'usse strict';
+  'use strict';
 
   var getTotalSum = function () {
       var isFirstInvoked = true;
       $scope.results.forEach(function (item) {
         item.values.forEach(function (val, i) {
           var curr = isFirstInvoked ? 0 : $scope.totals[i],
-            sum = Math.round((curr + val) * 100) / 100;
+            sum = Math.round((curr + val.actual) * 100) / 100;
 
           $scope.totals[i] = sum;
         });
@@ -79,6 +79,7 @@ function mainCntr($scope, $http, shownIngridients) {
 
   $scope.results = [];
   $scope.totals = [];
+  shownIngridients.unshift('weight');
 
   $http.get('/products')
     .success(function (data) {
@@ -102,7 +103,10 @@ function mainCntr($scope, $http, shownIngridients) {
       max = indexes.length;
 
     for (; i < max; i++) {
-      actualProduct.values.push(selected.values[indexes[i]]);
+      actualProduct.values.push({
+        origin: selected.values[indexes[i]],
+        actual: selected.values[indexes[i]]
+      });
     }
 
     $scope.results.push(actualProduct);
@@ -119,4 +123,60 @@ function mainCntr($scope, $http, shownIngridients) {
         $scope.totalResult = data;
       });
   };
+
+  $scope.weightChanged = function (product, value) {
+    var index = product.values.length,
+      newValue;
+
+    while (index--) {
+      newValue = product.values[index].origin * value.actual / 100;
+      product.values[index].actual = Math.round(newValue * 100) / 100;
+    }
+
+    getTotalSum();
+  };
 }
+
+angular.module('fatno.app')
+  .directive('spinEdit', function () {
+    'use strict';
+
+    return {
+      restrict: 'E',
+      templateUrl: 'scripts/dev/templates/spinEdit.html',
+      scope: {
+        td: '=spinValue',
+        val: '=spinModel',
+        weightChanged: '&weightChanged'
+      },
+      link: function (scope, element) {
+        var input = element.find('input');
+
+        scope.keyup = function(e) {
+          var code = e.which,
+            changeMap = {
+              40: function () {
+                if (scope.td.actual) {
+                  return --scope.td.actual;
+                }
+              },
+              38: function () {
+                return ++scope.td.actual;
+              }
+            };
+
+          if (code === 40 || code === 38) {
+            input.val(changeMap[code]());
+            scope.weightChanged(scope.td.actual, scope.td);
+          }
+        };
+
+        scope.wheelHandler = function ($event, $delta, $deltaX, $deltaY) {
+          var value = input.val();
+          scope.td.actual += $deltaY;
+
+          scope.weightChanged(scope.td.actual, scope.td);
+        };
+      }
+    };
+  });

@@ -1,0 +1,33 @@
+.spin-edit{
+    white-space: nowrap;
+    display: block;
+}
+.spin-edit input{
+    display: inline-block;
+    vertical-align: top;
+}
+.spin-edit .buttons{
+    display: inline-block;
+    vertical-align: top;
+    width: 15px;
+    background: #ccc;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.spin-edit .buttons span{
+    display: block;
+    height: 49%;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 0 2px;
+    background: #ccc;
+}
+.spin-edit .buttons .down{margin: 0;}
+.spin-edit .buttons span:hover{
+    background: #bbb;
+}

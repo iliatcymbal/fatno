@@ -88,6 +88,10 @@ a {
     font-weight: bold;
 }
 
+.table-values input{
+    width: 40px;
+}
+
 .results {
     list-style: none;
 }

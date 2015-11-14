@@ -3,9 +3,11 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "start": "grunt build && node ./bin/www.js",
+    "full-start": "grunt build && node ./bin/www.js",
+    "start": "node ./bin/www.js",
     "build": "grunt build",
-    "tests": "grunt tests"
+    "tests": "grunt tests",
+    "create-prod": "node ./files/getProds.js"
   },
   "dependencies": {
     "express": "~4.9.0",

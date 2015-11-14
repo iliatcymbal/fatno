@@ -1,0 +1,11 @@
+<span class="spin-edit">
+    <input type="text"
+           ng-model="td.actual"
+           ng-keyup="keyup($event)"
+           ng-change="weightChanged(val, td)"
+           msd-wheel="wheelHandler($event, $delta, $deltaX, $deltaY)"/>
+    <span class="buttons">
+        <span class="up" ng-mouseup="stop()" ng-mousedown="start(true)">&#9650;</span>
+        <span class="down" ng-mouseup="stop()" ng-mousedown="start()">&#9660;</span>
+    </span>
+</span>

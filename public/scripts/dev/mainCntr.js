@@ -2,14 +2,14 @@ angular.module('fatno.app')
   .controller('mainCntr', ['$scope', '$http', 'shownIngridients', mainCntr]);
 
 function mainCntr($scope, $http, shownIngridients) {
-  'usse strict';
+  'use strict';
 
   var getTotalSum = function () {
       var isFirstInvoked = true;
       $scope.results.forEach(function (item) {
         item.values.forEach(function (val, i) {
           var curr = isFirstInvoked ? 0 : $scope.totals[i],
-            sum = Math.round((curr + val) * 100) / 100;
+            sum = Math.round((curr + val.actual) * 100) / 100;
 
           $scope.totals[i] = sum;
         });
@@ -61,6 +61,7 @@ function mainCntr($scope, $http, shownIngridients) {
 
   $scope.results = [];
   $scope.totals = [];
+  shownIngridients.unshift('weight');
 
   $http.get('/products')
     .success(function (data) {
@@ -84,7 +85,10 @@ function mainCntr($scope, $http, shownIngridients) {
       max = indexes.length;
 
     for (; i < max; i++) {
-      actualProduct.values.push(selected.values[indexes[i]]);
+      actualProduct.values.push({
+        origin: selected.values[indexes[i]],
+        actual: selected.values[indexes[i]]
+      });
     }
 
     $scope.results.push(actualProduct);
@@ -100,5 +104,17 @@ function mainCntr($scope, $http, shownIngridients) {
       .error(function (data) {
         $scope.totalResult = data;
       });
+  };
+
+  $scope.weightChanged = function (product, value) {
+    var index = product.values.length,
+      newValue;
+
+    while (index--) {
+      newValue = product.values[index].origin * value.actual / 100;
+      product.values[index].actual = Math.round(newValue * 100) / 100;
+    }
+
+    getTotalSum();
   };
 }

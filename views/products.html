@@ -14,8 +14,13 @@
             </tr>
             <tr ng-repeat="val in results track by $index">
                 <td>{{val.name}}</td>
-                <!--td><input type="text" class="weight" value="100"/></td-->
-                <td ng-repeat="td in val.values track by $index">{{td}}</td>
+                <td ng-repeat="td in val.values track by $index">
+                    <spin-edit ng-if="$index === 0"
+                               spin-model="val"
+                               spin-value="td"
+                               weight-changed="weightChanged(val, td)"></spin-edit>
+                    <span ng-if="$index !== 0">{{td.actual}}</span>
+                </td>
             </tr>
             <tr ng-if="totals.length !== 0" class="total">
                 <td>ВСЕГО</td>
